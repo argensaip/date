@@ -1,12 +1,20 @@
 // --- ⚙️ CONFIGURATION ⚙️ ---
-const FORMSPREE_ENDPOINT = "https://formspree.io/f/meejword";;
+const FORMSPREE_ENDPOINT = "https://formspree.io/f/meejword";
+
+// 🛑 RESERVED DATES LIST 🛑
+const RESERVED_DATES = [
+	"Monday, December 29, 2025",
+	"Wednesday, December 31, 2025"
+];
 
 // --- NAVIGATION ---
 function openPage(type) {
 	document.getElementById('home-screen').style.display = 'none';
 	document.getElementById('back-btn').style.display = 'inline-block';
+
 	document.querySelectorAll('.page').forEach(el => el.classList.remove('active'));
 
+	// Handle Page Selection
 	if (type === 'romantic') {
 		document.getElementById('romantic-page').classList.add('active');
 		generateCalendar('romantic-calendar', 'romantic');
@@ -15,7 +23,11 @@ function openPage(type) {
 		generateCalendar('friendly-calendar', 'friendly');
 	} else if (type === 'about') {
 		document.getElementById('about-page').classList.add('active');
+	} else if (type === 'portfolio') {
+		document.getElementById('portfolio-page').classList.add('active');
 	}
+
+	window.scrollTo(0, 0);
 }
 
 function goHome() {
@@ -37,19 +49,27 @@ function generateCalendar(elementId, type) {
 	for (let i = 0; i < 7; i++) {
 		const date = new Date(today);
 		date.setDate(today.getDate() + i);
+
 		const dateString = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 		const dayName = date.toLocaleDateString('en-US', { weekday: 'short' });
 		const fullDateStr = date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 
 		const card = document.createElement('div');
-		card.className = `day-card`;
-		card.innerHTML = `<div class="day-date">${dateString}</div><div class="day-name">${dayName}</div>`;
-		card.onclick = () => openModal(type, fullDateStr);
+
+		if (RESERVED_DATES.includes(fullDateStr)) {
+			card.className = `day-card reserved`;
+			card.innerHTML = `<div class="day-date">${dateString}</div><div class="day-name">RESERVED</div>`;
+		} else {
+			card.className = `day-card`;
+			card.innerHTML = `<div class="day-date">${dateString}</div><div class="day-name">${dayName}</div>`;
+			card.onclick = () => openModal(type, fullDateStr);
+		}
+
 		container.appendChild(card);
 	}
 }
 
-// --- UPDATED FORM LOGIC ---
+// --- FORM HANDLING ---
 let currentType = "";
 let currentDate = "";
 
@@ -69,12 +89,11 @@ function openModal(type, dateStr) {
 	submitBtn.innerText = "Send Invite 🚀";
 
 	if (type === 'romantic') {
-		submitBtn.style.background = '#d93644';
-		submitBtn.style.boxShadow = '0 6px 0 #9e232e';
+		submitBtn.style.background = 'linear-gradient(135deg, #b92b27 0%, #1565C0 100%)';
 	} else {
-		submitBtn.style.background = '#004e92';
-		submitBtn.style.boxShadow = '0 6px 0 #002c52';
+		submitBtn.style.background = 'linear-gradient(135deg, #11998e 0%, #38ef7d 100%)';
 	}
+
 	overlay.style.display = 'flex';
 }
 
@@ -94,20 +113,17 @@ async function handleFormSubmit(e) {
 	const statusMsg = document.getElementById('status-msg');
 	const form = document.getElementById('date-form');
 
-	// --- VALIDATION: CHECK IF EMPTY ---
 	if (!nameInput.value.trim() || !instaInput.value.trim() || !descInput.value.trim()) {
 		statusMsg.style.display = 'block';
-		statusMsg.style.color = 'red';
-		// This is the specific text you asked for:
+		statusMsg.style.color = '#ff6b6b';
 		statusMsg.innerText = "You should fill it!";
-		return; // Stop code here
+		return;
 	}
+
+	const commonInfo = `\n\n👤 Name: ${nameInput.value}\n📸 Insta: ${instaInput.value}\n📝 Bio: ${descInput.value}\n📅 Date: ${currentDate}`;
 
 	let finalSubject = "";
 	let finalBody = "";
-
-	// Build the message with new fields
-	const commonInfo = `\n\n👤 Name: ${nameInput.value}\n📸 Insta: ${instaInput.value}\n📝 Bio: ${descInput.value}\n📅 Date: ${currentDate}`;
 
 	if (currentType === 'romantic') {
 		finalSubject = `❤️ Date Request: ${nameInput.value}`;
@@ -122,8 +138,6 @@ async function handleFormSubmit(e) {
 
 	submitBtn.disabled = true;
 	submitBtn.innerText = "Sending...";
-	submitBtn.style.top = "4px";
-	submitBtn.style.boxShadow = "none";
 
 	try {
 		const response = await fetch(FORMSPREE_ENDPOINT, {
@@ -140,23 +154,14 @@ async function handleFormSubmit(e) {
 			setTimeout(closeModal, 2500);
 		} else {
 			statusMsg.style.display = 'block';
-			statusMsg.style.color = '#e74c3c';
+			statusMsg.style.color = '#ff6b6b';
 			statusMsg.innerText = "Oops! Something went wrong.";
-			resetBtnStyle();
+			submitBtn.disabled = false;
 		}
 	} catch (error) {
 		statusMsg.style.display = 'block';
-		statusMsg.style.color = '#e74c3c';
+		statusMsg.style.color = '#ff6b6b';
 		statusMsg.innerText = "Network error.";
-		resetBtnStyle();
+		submitBtn.disabled = false;
 	}
-}
-
-function resetBtnStyle() {
-	const btn = document.getElementById('modal-submit-btn');
-	btn.disabled = false;
-	btn.innerText = "Try Again";
-	btn.style.top = "0";
-	if (currentType === 'romantic') btn.style.boxShadow = '0 6px 0 #9e232e';
-	else btn.style.boxShadow = '0 6px 0 #002c52';
 }
