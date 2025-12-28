@@ -10,6 +10,7 @@ body {
     min-height: 100vh;
     display: flex; flex-direction: column;
     overflow-x: hidden; overflow-y: auto;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* --- 2. HEADER --- */
@@ -17,6 +18,7 @@ header {
     background: rgba(18, 18, 18, 0.8); padding: 20px; text-align: center;
     position: sticky; top: 0; z-index: 50; backdrop-filter: blur(15px);
     border-bottom: 1px solid rgba(255,255,255,0.1);
+    transition: background 0.3s ease, border-color 0.3s ease;
 }
 
 .profile-container { position: relative; display: inline-block; }
@@ -29,6 +31,34 @@ header {
 
 h1 { font-size: 1.5rem; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: #fff; margin-top: 10px; }
 .back-btn { display: none; margin-top: 10px; cursor: pointer; font-weight: 600; color: #fff; background: rgba(255,255,255,0.1); padding: 8px 20px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.2); font-size: 0.8rem; }
+
+/* THEME SWITCH */
+.theme-switch-wrapper { display: flex; align-items: center; justify-content: center; margin-top: 15px; }
+.theme-switch { position: relative; display: inline-block; width: 50px; height: 26px; }
+.theme-switch input { opacity: 0; width: 0; height: 0; }
+.slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #333; transition: .4s; border-radius: 34px; border: 1px solid #555; }
+.slider:before { position: absolute; content: "🌙"; display: flex; align-items: center; justify-content: center; font-size: 12px; height: 20px; width: 20px; left: 2px; bottom: 2px; background-color: #121212; transition: .4s; border-radius: 50%; }
+input:checked + .slider { background-color: #ddd; border-color: #ccc; }
+input:checked + .slider:before { transform: translateX(24px); content: "☀️"; background-color: white; }
+
+/* LIGHT MODE STYLES */
+body.light-mode { background-color: #f4f6f8; color: #333; }
+body.light-mode header { background: rgba(255, 255, 255, 0.85); border-bottom: 1px solid rgba(0,0,0,0.1); }
+body.light-mode h1 { color: #222; }
+body.light-mode .back-btn { color: #333; background: rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.1); }
+body.light-mode .block { border: 1px solid rgba(0,0,0,0.05); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+body.light-mode .day-card { background: white; border: 1px solid rgba(0,0,0,0.1); box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+body.light-mode .day-date { color: #333; }
+body.light-mode .day-name { color: #777; }
+body.light-mode .info-card, body.light-mode .portfolio-card { background: white; border: 1px solid rgba(0,0,0,0.1); box-shadow: 0 4px 15px rgba(0,0,0,0.05); color: #333; }
+body.light-mode .info-value, body.light-mode .bio-text, body.light-mode .project-info p { color: #555; }
+body.light-mode .project-info h3 { color: #e67e22; }
+body.light-mode .arrow { color: #999; }
+body.light-mode .modal { background: #fff; border: 1px solid #eee; box-shadow: 0 25px 50px rgba(0,0,0,0.2); }
+body.light-mode .modal h2 { color: #333; }
+body.light-mode .form-group label { color: #555; }
+body.light-mode .form-group input, body.light-mode .form-group textarea { background: #f9f9f9; border: 1px solid #ddd; color: #333; }
+body.light-mode .form-group input:focus, body.light-mode .form-group textarea:focus { background: #fff; border-color: #a29bfe; }
 
 /* --- 3. LAYOUT --- */
 #main-container { flex: 1; position: relative; padding: 20px; width: 100%; max-width: 1200px; margin: 0 auto; }

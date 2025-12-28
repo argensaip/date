@@ -165,3 +165,12 @@ async function handleFormSubmit(e) {
 		submitBtn.disabled = false;
 	}
 }
+
+// --- THEME HANDLING ---
+function toggleTheme(checkbox) {
+	if (checkbox.checked) {
+		document.body.classList.add('light-mode');
+	} else {
+		document.body.classList.remove('light-mode');
+	}
+}
