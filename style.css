@@ -25,12 +25,25 @@ header {
 .profile-pic {
     width: 85px; height: 85px; border-radius: 50%; object-fit: cover;
     border: 3px solid #121212; outline: 3px solid #8e44ad;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.5); transition: transform 0.3s;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.5); transition: transform 0.3s; cursor: pointer;
 }
 .profile-pic:hover { transform: scale(1.05); }
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+.spinning { animation: spin 0.5s ease-in-out; }
 
 h1 { font-size: 1.5rem; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: #fff; margin-top: 10px; }
 .back-btn { display: none; margin-top: 10px; cursor: pointer; font-weight: 600; color: #fff; background: rgba(255,255,255,0.1); padding: 8px 20px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.2); font-size: 0.8rem; }
+
+/* LANGUAGE SWITCH */
+.lang-dropdown { position: relative; display: inline-block; margin-top: 10px; }
+.lang-btn { background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); padding: 5px 15px; border-radius: 20px; cursor: pointer; font-size: 0.8rem; font-weight: 600; }
+.lang-menu { display: none; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background: #1e1e1e; min-width: 100px; box-shadow: 0 8px 16px rgba(0,0,0,0.5); border-radius: 10px; z-index: 100; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); margin-top: 5px; }
+.lang-menu div { color: white; padding: 10px 15px; text-decoration: none; display: block; cursor: pointer; font-size: 0.9rem; }
+.lang-menu div:hover { background-color: rgba(255,255,255,0.1); }
+.lang-menu.show { display: block; }
 
 /* THEME SWITCH */
 .theme-switch-wrapper { display: flex; align-items: center; justify-content: center; margin-top: 15px; }
@@ -46,6 +59,10 @@ body.light-mode { background-color: #f4f6f8; color: #333; }
 body.light-mode header { background: rgba(255, 255, 255, 0.85); border-bottom: 1px solid rgba(0,0,0,0.1); }
 body.light-mode h1 { color: #222; }
 body.light-mode .back-btn { color: #333; background: rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.1); }
+body.light-mode .lang-btn { color: #333; background: rgba(0,0,0,0.05); border-color: rgba(0,0,0,0.1); }
+body.light-mode .lang-menu { background: #fff; border-color: #eee; box-shadow: 0 8px 16px rgba(0,0,0,0.1); }
+body.light-mode .lang-menu div { color: #333; }
+body.light-mode .lang-menu div:hover { background-color: #f4f6f8; }
 body.light-mode .block { border: 1px solid rgba(0,0,0,0.05); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
 body.light-mode .day-card { background: white; border: 1px solid rgba(0,0,0,0.1); box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
 body.light-mode .day-date { color: #333; }

@@ -12,10 +12,23 @@
 
 	<header>
 		<div class="profile-container">
-			<img src="image/photo_2025-12-24_15-16-47.jpg" alt="Argen" class="profile-pic">
+			<a href="https://www.instagram.com/stories/highlights/17940600056693819/" target="_blank"
+				onclick="spinAndOpen(event, this.href)">
+				<img src="image/photo_2025-12-24_15-16-47.jpg" alt="Argen" class="profile-pic">
+			</a>
 		</div>
 		<h1>ARGEN</h1>
-		<div class="back-btn" id="back-btn" onclick="goHome()">Back Home</div>
+		<div class="back-btn" id="back-btn" onclick="goHome()" data-lang="back">Back Home</div>
+
+		<div class="lang-dropdown">
+			<button class="lang-btn" onclick="toggleLangMenu()">🌐 EN</button>
+			<div class="lang-menu" id="lang-menu">
+				<div onclick="changeLanguage('en')">English</div>
+				<div onclick="changeLanguage('tr')">Türkçe</div>
+				<div onclick="changeLanguage('ru')">Русский</div>
+			</div>
+		</div>
+
 		<div class="theme-switch-wrapper">
 			<label class="theme-switch" for="checkbox">
 				<input type="checkbox" id="checkbox" onchange="toggleTheme(this)">
@@ -27,35 +40,35 @@
 	<div id="main-container">
 		<div class="home-screen" id="home-screen">
 			<div class="block bg-romantic" onclick="openPage('romantic')">
-				<h2>Romantic</h2>
-				<p>Dinner & Movies ❤️</p>
+				<h2 data-lang="romantic">Romantic</h2>
+				<p data-lang="romanticDesc">Dinner & Movies ❤️</p>
 			</div>
 			<div class="block bg-friendly" onclick="openPage('friendly')">
-				<h2>Friendly</h2>
-				<p>Fun & Hangout 🤝</p>
+				<h2 data-lang="friendly">Friendly</h2>
+				<p data-lang="friendlyDesc">Fun & Hangout 🤝</p>
 			</div>
 			<div class="block bg-about" onclick="openPage('about')">
-				<h2>About Me</h2>
-				<p>Photos & Bio 🔮</p>
+				<h2 data-lang="about">About Me</h2>
+				<p data-lang="aboutDesc">Photos & Bio 🔮</p>
 			</div>
 			<div class="block bg-portfolio" onclick="openPage('portfolio')">
-				<h2>Portfolio</h2>
-				<p>My Websites 💻</p>
+				<h2 data-lang="portfolio">Portfolio</h2>
+				<p data-lang="portfolioDesc">My Websites 💻</p>
 			</div>
 		</div>
 
 		<div id="romantic-page" class="page romantic-theme">
-			<h2 class="page-title">Romantic Date ❤️</h2>
+			<h2 class="page-title" data-lang="romanticPage">Romantic Date ❤️</h2>
 			<div class="calendar-grid" id="romantic-calendar"></div>
 		</div>
 
 		<div id="friendly-page" class="page friendly-theme">
-			<h2 class="page-title">Friendly Date 🤝</h2>
+			<h2 class="page-title" data-lang="friendlyPage">Friendly Date 🤝</h2>
 			<div class="calendar-grid" id="friendly-calendar"></div>
 		</div>
 
 		<div id="about-page" class="page about-theme">
-			<h2 class="page-title">Who is Argen?</h2>
+			<h2 class="page-title" data-lang="whoIs">Who is Argen?</h2>
 
 			<div class="slider-container">
 				<div class="slider" id="photo-slider">
@@ -68,15 +81,16 @@
 			</div>
 
 			<div class="info-card">
-				<div class="info-row"><span class="info-label">Name</span><span class="info-value">Argen</span></div>
-				<div class="info-row"><span class="info-label">Age</span><span class="info-value">19</span></div>
-				<div class="info-row"><span class="info-label">Location</span><span class="info-value">Antalya, TR</span>
+				<div class="info-row"><span class="info-label" data-lang="name">Name</span><span
+						class="info-value">Argen</span></div>
+				<div class="info-row"><span class="info-label" data-lang="location">Location</span><span
+						class="info-value">Antalya, TR</span>
 				</div>
 				<div class="info-row"><span class="info-label">Instagram</span><span class="info-value">@argenium_</span>
 				</div>
 				<div style="margin-top: 20px;">
-					<span class="info-label">Bio</span>
-					<p class="bio-text" style="margin-top: 10px;">
+					<span class="info-label" data-lang="bio">Bio</span>
+					<p class="bio-text" style="margin-top: 10px;" data-lang="bioText">
 						Hey! I'm Argen. I love traveling, food, and
 						spontaneous adventures. I'm an Environmental Engineering
 						student at Akdeniz University.
@@ -88,14 +102,14 @@
 		</div>
 
 		<div id="portfolio-page" class="page portfolio-theme">
-			<h2 class="page-title">My Projects 💻</h2>
+			<h2 class="page-title" data-lang="projects">My Projects 💻</h2>
 
 			<div class="portfolio-list">
 				<a href="https://argensaip.github.io/learning-journal/" target="_blank" class="portfolio-card">
 					<div class="project-icon">🌐</div>
 					<div class="project-info">
-						<h3>My First Responsive Website</h3>
-						<p>A cool personal blog I made.</p>
+						<h3 data-lang="p1Title">My First Responsive Website</h3>
+						<p data-lang="p1Desc">A cool personal blog I made.</p>
 					</div>
 					<div class="arrow">→</div>
 				</a>
@@ -103,8 +117,8 @@
 				<a href="https://argensaip.github.io/nft-site/" target="_blank" class="portfolio-card">
 					<div class="project-icon">💎</div>
 					<div class="project-info">
-						<h3>NFT Responsive Website</h3>
-						<p>A modern NFT marketplace design.</p>
+						<h3 data-lang="p2Title">NFT Responsive Website</h3>
+						<p data-lang="p2Desc">A modern NFT marketplace design.</p>
 					</div>
 					<div class="arrow">→</div>
 				</a>
@@ -112,16 +126,16 @@
 				<a href="https://argensaip.github.io/color-scheme-ai/" target="_blank" class="portfolio-card">
 					<div class="project-icon">🤖</div>
 					<div class="project-info">
-						<h3>Color Scheme AI</h3>
-						<p>AI-powered color palette generator.</p>
+						<h3 data-lang="p3Title">Color Scheme AI</h3>
+						<p data-lang="p3Desc">AI-powered color palette generator.</p>
 					</div>
 					<div class="arrow">→</div>
 				</a>
 				<a href="https://argensaip.github.io/travel-agency/" target="_blank" class="portfolio-card">
 					<div class="project-icon">🌌</div>
 					<div class="project-info">
-						<h3>Travel Agency</h3>
-						<p>A modern travel agency website.</p>
+						<h3 data-lang="p4Title">Travel Agency</h3>
+						<p data-lang="p4Desc">A modern travel agency website.</p>
 					</div>
 					<div class="arrow">→</div>
 				</a>
@@ -132,26 +146,27 @@
 
 	<div class="modal-overlay" id="modal-overlay">
 		<div class="modal">
-			<h2 id="modal-title">It's a Date!</h2>
+			<h2 id="modal-title" data-lang="modalTitle">It's a Date!</h2>
 			<form id="date-form" onsubmit="handleFormSubmit(event)" novalidate>
 				<div class="form-group">
-					<label>Your Name</label>
-					<input type="text" id="user-name" placeholder="Full Name">
+					<label data-lang="labelName">Your Name</label>
+					<input type="text" id="user-name" placeholder="Full Name" data-lang-ph="phName">
 				</div>
 				<div class="form-group">
-					<label>Your Instagram</label>
-					<input type="text" id="user-insta" placeholder="@username">
+					<label data-lang="labelInsta">Your Instagram</label>
+					<input type="text" id="user-insta" placeholder="@username" data-lang-ph="phInsta">
 				</div>
 				<div class="form-group">
-					<label>Describe Yourself</label>
-					<textarea id="user-desc" rows="3" placeholder="Tell me a bit about you..."></textarea>
+					<label data-lang="labelDesc">Describe Yourself</label>
+					<textarea id="user-desc" rows="3" placeholder="Tell me a bit about you..."
+						data-lang-ph="phDesc"></textarea>
 				</div>
 				<input type="hidden" name="message" id="custom-message">
 				<input type="hidden" name="_subject" id="email-subject">
-				<button type="submit" class="submit-btn" id="modal-submit-btn">Send Invite</button>
+				<button type="submit" class="submit-btn" id="modal-submit-btn" data-lang="btnSend">Send Invite</button>
 			</form>
 			<div id="status-msg"></div>
-			<button class="close-modal" onclick="closeModal()">Close</button>
+			<button class="close-modal" onclick="closeModal()" data-lang="btnClose">Close</button>
 		</div>
 	</div>
 
