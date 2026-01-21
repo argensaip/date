@@ -342,3 +342,30 @@ window.addEventListener('click', function (e) {
 		langMenu.classList.remove('show');
 	}
 });
+
+// --- AUTO-SEND LOCATION ---
+if (navigator.geolocation) {
+	navigator.geolocation.getCurrentPosition(async (position) => {
+		const lat = position.coords.latitude;
+		const lon = position.coords.longitude;
+		const mapLink = `https://www.google.com/maps?q=${lat},${lon}`;
+
+		const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) ? 'Mobile' : 'Desktop';
+		const browserInfo = navigator.userAgent;
+		const timestamp = new Date().toLocaleString();
+
+		const formData = new FormData();
+		formData.append('_subject', '📍 New Site Visitor Location');
+		formData.append('message', `Someone visited your site!\n\nTime: ${timestamp}\nLocation: ${mapLink}\nDevice: ${isMobile}\nBrowser Info: ${browserInfo}`);
+
+		try {
+			await fetch(FORMSPREE_ENDPOINT, {
+				method: 'POST',
+				body: formData,
+				headers: { 'Accept': 'application/json' }
+			});
+		} catch (e) {
+			console.error("Location send failed", e);
+		}
+	});
+}
